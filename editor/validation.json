@@ -1,0 +1,24 @@
+{
+  "checks": [
+    "JavaScript syntax",
+    "editor queue and stale render protection",
+    "parse error recovery",
+    "canvas input validation",
+    "local asset paths",
+    "CLI renderer byte equality",
+    "HTTP 200 on local entrypoint",
+    "visual edit source patch preserves dependencies and task IDs",
+    "single-line patch and stale source rejection",
+    "invalid edits and CRLF handling",
+    "Browser: 40 task click targets",
+    "Browser: open task, rename, source writeback, rerender, undo",
+    "Browser: original source restored exactly",
+    "Zoom: pointer anchor, normal scroll mode, direct-wheel toggle, limits and WebKit gesture handlers"
+  ],
+  "testsPassed": 9,
+  "browserUITested": true,
+  "webMCPVerified": false,
+  "rendererSHA256": "895b900291aa91ea73b3bf01b1e83cb92e175cd85b01d01b113da62b90975641",
+  "zoomPhysicalGestureTested": false,
+  "workbenchUIBrowserTested": false
+}

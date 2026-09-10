@@ -1,0 +1,19 @@
+{
+  "name": "mermaid-gantt-styled",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "gantt-styled": "./gantt.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/compatibility.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "mermaid": "11.17.2",
+    "playwright": "1.62.1"
+  }
+}

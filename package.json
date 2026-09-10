@@ -1,0 +1,16 @@
+{
+  "name": "mermaid-gantt-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "npm --prefix editor start",
+    "check": "npm --prefix editor run check",
+    "test": "npm --prefix editor test",
+    "test:renderer": "npm --prefix renderer test",
+    "setup:renderer": "npm --prefix renderer ci"
+  }
+}

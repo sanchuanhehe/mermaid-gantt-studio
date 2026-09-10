@@ -1,0 +1,11 @@
+{
+  "name": "mermaid-gantt-local-editor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs --open",
+    "check": "node --check server.mjs && node --check dist/app.mjs && node --check dist/renderer.mjs && node --check dist/browser-render.mjs && node --check dist/source-edit.mjs && node --check dist/preview-zoom.mjs && node --check dist/workspace-ui.mjs",
+    "test": "node --test test/*.test.mjs"
+  }
+}

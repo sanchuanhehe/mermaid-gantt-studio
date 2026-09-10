@@ -1,0 +1,378 @@
+{
+  "engine": "mermaid@11.17.2",
+  "fixtures": [
+    {
+      "name": "weekends-excludes-includes",
+      "passed": true,
+      "taskCount": 2,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "Work ",
+          "section": "Delivery",
+          "start": 1789084800000,
+          "end": 1789430400000,
+          "renderEnd": 1789430400000,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "b",
+          "label": "Follow ",
+          "section": "Delivery",
+          "start": 1789430400000,
+          "end": 1789603200000,
+          "renderEnd": 1789603200000,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 1
+    },
+    {
+      "name": "custom-date-format-and-weekend",
+      "passed": true,
+      "taskCount": 1,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "Work ",
+          "section": "Team",
+          "start": 1788998400000,
+          "end": 1789430400000,
+          "renderEnd": 1789430400000,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 1
+    },
+    {
+      "name": "implicit-start-and-multi-after",
+      "passed": true,
+      "taskCount": 4,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "A ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1788393600000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "b",
+          "label": "B ",
+          "section": "Team",
+          "start": 1788307200000,
+          "end": 1788912000000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "c",
+          "label": "Join ",
+          "section": "Team",
+          "start": 1788912000000,
+          "end": 1788998400000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "task1",
+          "label": "Implicit ",
+          "section": "Team",
+          "start": 1788393600000,
+          "end": 1788652800000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "until",
+      "passed": true,
+      "taskCount": 2,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "Prep ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1789862400000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "target",
+          "label": "Target ",
+          "section": "Team",
+          "start": 1789862400000,
+          "end": 1789862400000,
+          "renderEnd": null,
+          "milestone": true,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "inclusive-end-dates",
+      "passed": true,
+      "taskCount": 1,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "Work ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1788480000000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "hour-minute-second-millisecond",
+      "passed": true,
+      "taskCount": 4,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "A ",
+          "section": "Team",
+          "start": 1789030800000,
+          "end": 1789045200000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "b",
+          "label": "B ",
+          "section": "Team",
+          "start": 1789045200000,
+          "end": 1789047000000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "c",
+          "label": "C ",
+          "section": "Team",
+          "start": 1789047000000,
+          "end": 1789047030000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "d",
+          "label": "D ",
+          "section": "Team",
+          "start": 1789047030000,
+          "end": 1789047030500,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "fraction-month-year",
+      "passed": true,
+      "taskCount": 3,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "Fraction ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1788393600000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "b",
+          "label": "Month ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1790812800000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "c",
+          "label": "Year ",
+          "section": "Team",
+          "start": 1790812800000,
+          "end": 1822348800000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "nonzero-milestone-and-vert",
+      "passed": true,
+      "taskCount": 3,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "A ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1789084800000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "m",
+          "label": "Release ",
+          "section": "Team",
+          "start": 1788566400000,
+          "end": 1788739200000,
+          "renderEnd": null,
+          "milestone": true,
+          "vert": false
+        },
+        {
+          "id": "v",
+          "label": "Deadline ",
+          "section": "Team",
+          "start": 1788825600000,
+          "end": 1788825600000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": true
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "frontmatter-compact",
+      "passed": true,
+      "taskCount": 3,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "A ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1788393600000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "b",
+          "label": "B ",
+          "section": "Team",
+          "start": 1788393600000,
+          "end": 1788566400000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "c",
+          "label": "C ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1788393600000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "init-axis-ticks-and-today-off",
+      "passed": true,
+      "taskCount": 2,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "A ",
+          "section": "Team",
+          "start": 1788220800000,
+          "end": 1790812800000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        },
+        {
+          "id": "b",
+          "label": "B ",
+          "section": "Team",
+          "start": 1790812800000,
+          "end": 1791072000000,
+          "renderEnd": null,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 0
+    },
+    {
+      "name": "multiple-excludes",
+      "passed": true,
+      "taskCount": 1,
+      "schedule": [
+        {
+          "id": "a",
+          "label": "A ",
+          "section": "Team",
+          "start": 1789084800000,
+          "end": 1789603200000,
+          "renderEnd": 1789603200000,
+          "milestone": false,
+          "vert": false
+        }
+      ],
+      "geometryUnchanged": true,
+      "excludedRanges": 1
+    },
+    {
+      "name": "ws53-40-tasks",
+      "passed": true,
+      "geometryUnchanged": true
+    },
+    {
+      "name": "timezone-aware-clock",
+      "passed": true
+    },
+    {
+      "name": "dense-tick-labels",
+      "passed": true,
+      "geometryUnchanged": true
+    }
+  ]
+}
