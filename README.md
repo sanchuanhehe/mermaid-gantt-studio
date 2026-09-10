@@ -52,3 +52,7 @@ npm run test:renderer
 本仓库独立启用 GitHub Pages，推送 main 后 `.github/workflows/pages.yml` 会检查并发布网页。账号主页 `sanchuanhehe.github.io` 负责绑定域名，本仓库不需要 CNAME，不把文件复制到账号主页。
 
 `python3 scripts/export-pages.py` 导出公开版到 `_site/`，只包含网页资产和 `editor/examples/public.mmd` 通用示例。完整工程继续私有，内部排期与备注不随站点发布。
+
+## 版本与生命周期
+
+初始版本为 **0.1.0**，当前工程版本见 `package.json`。查看 [变更记录](CHANGELOG.md)、[生命周期与发布指南](docs/LIFECYCLE.md) 和 [GitHub Releases](https://github.com/sanchuanhehe/mermaid-gantt-studio/releases)。main 持续部署，版本标签生成可复现的发布包。

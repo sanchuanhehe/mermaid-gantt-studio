@@ -1,6 +1,6 @@
 {
   "name": "mermaid-gantt-studio",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -8,9 +8,13 @@
   },
   "scripts": {
     "start": "npm --prefix editor start",
-    "check": "npm --prefix editor run check",
-    "test": "npm --prefix editor test",
+    "check": "npm run version:check && npm --prefix editor run check",
+    "test": "npm --prefix editor test && node --test test/*.test.mjs",
     "test:renderer": "npm --prefix renderer test",
-    "setup:renderer": "npm --prefix renderer ci"
+    "setup:renderer": "npm --prefix renderer ci",
+    "version:check": "node scripts/version.mjs check",
+    "version:set": "node scripts/version.mjs set",
+    "release:check": "node scripts/version.mjs release",
+    "release:package": "python3 scripts/package-release.py"
   }
 }

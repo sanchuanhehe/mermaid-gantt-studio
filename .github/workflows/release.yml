@@ -1,0 +1,47 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+  publish:
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Check version and tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: node scripts/version.mjs release "$RELEASE_TAG"
+      - name: Package source and offline editor
+        run: python3 scripts/package-release.py
+      - name: Publish immutable release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          flags=()
+          if [[ "$RELEASE_TAG" == *-* ]]; then
+            flags+=(--prerelease --latest=false)
+          else
+            flags+=(--latest)
+          fi
+          gh release create "$RELEASE_TAG" \
+            --verify-tag --title "$RELEASE_TAG" \
+            --notes-file release-artifacts/release-notes.md \
+            "${flags[@]}" \
+            release-artifacts/*-source.zip \
+            release-artifacts/*-web.zip \
+            release-artifacts/SHA256SUMS.txt

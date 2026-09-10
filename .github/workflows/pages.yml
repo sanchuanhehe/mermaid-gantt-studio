@@ -9,7 +9,10 @@ concurrency:
   group: pages
   cancel-in-progress: false
 jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
   deploy:
+    needs: checks
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,10 +26,6 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
-      - name: Validate editor
-        run: |
-          npm run check
-          npm test
       - name: Export public assets
         run: python3 scripts/export-pages.py
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
