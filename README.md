@@ -44,3 +44,11 @@ npm run test:renderer
 ```
 
 渲染器测试需要先安装依赖与 Chromium，也可通过 `GANTT_BROWSER` 指定已有 Chrome。第三方许可证见 `editor/dist/vendor/MERMAID-LICENSE`。依赖缓存、本地部署信息和打包归档不纳入源码仓库。
+
+## 在线版
+
+入口：https://github.sanchuanhehe.com/mermaid-gantt-studio/
+
+公开静态网页位于账号主页仓库 `sanchuanhehe/sanchuanhehe.github.io` 的 `mermaid-gantt-studio/` 目录。完整工程继续保持私有。公开网页使用通用排期示例，并移除了内部计划备注；本仓库的私人示例不会自动发布。
+
+更新在线版时，应只同步 `editor/dist` 中的网页资产，并保留公开版的通用示例和备注，再提交账号主页仓库。
