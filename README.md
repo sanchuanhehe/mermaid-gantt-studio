@@ -56,3 +56,11 @@ npm run test:renderer
 ## 版本与生命周期
 
 初始版本为 **0.1.0**，当前工程版本见 `package.json`。查看 [变更记录](CHANGELOG.md)、[生命周期与发布指南](docs/LIFECYCLE.md) 和 [GitHub Releases](https://github.com/sanchuanhehe/mermaid-gantt-studio/releases)。main 持续部署，版本标签生成可复现的发布包。
+
+## 在线通道
+
+- [最新 stable](https://github.sanchuanhehe.com/mermaid-gantt-studio/)：现有地址，随正式 Release 更新。
+- [最新 preview](https://github.sanchuanhehe.com/mermaid-gantt-studio/preview/)：main 通过检查后更新。
+- [v0.1.0 快照](https://github.sanchuanhehe.com/mermaid-gantt-studio/versions/v0.1.0/)：固定版本；后续版本使用 versions/v版本号/。
+
+图中文字编辑及新增泳道/节点目前在 preview，尚未发布为新 stable。详见 [生命周期](docs/LIFECYCLE.md)。

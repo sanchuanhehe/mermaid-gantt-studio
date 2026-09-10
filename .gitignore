@@ -7,3 +7,5 @@ node_modules/
 *.log
 _site/
 release-artifacts/
+
+__pycache__/

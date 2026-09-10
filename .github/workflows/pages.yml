@@ -2,6 +2,9 @@ name: Deploy editor to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,6 +13,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   checks:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     uses: ./.github/workflows/ci.yml
   deploy:
     needs: checks
@@ -26,8 +30,10 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
-      - name: Export public assets
-        run: python3 scripts/export-pages.py
+      - name: Compose stable, preview and version snapshots
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/build-pages-channels.py
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:

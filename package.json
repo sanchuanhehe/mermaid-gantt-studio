@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm --prefix editor start",
     "check": "npm run version:check && npm --prefix editor run check",
-    "test": "npm --prefix editor test && node --test test/*.test.mjs",
+    "test": "npm --prefix editor test && node --test test/*.test.mjs && python3 -m unittest discover -s test -p \"test_*.py\"",
     "test:renderer": "npm --prefix renderer test",
     "setup:renderer": "npm --prefix renderer ci",
     "version:check": "node scripts/version.mjs check",

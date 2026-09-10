@@ -11,6 +11,7 @@ During initial development (0.x), minor releases may contain explicitly document
 
 ### Added
 
+- Separate Pages channels: latest stable at the existing root, main previews under preview/, and release snapshots under versions/vX.Y.Z/.
 - Graphical editing of Gantt titles, swimlane names, notes and legend text, with source writeback and undo.
 - Forms for adding swimlanes with an initial task and adding tasks to existing swimlanes.
 - Editor presentation comments that preserve notes and legend text when saving and reopening Mermaid files.
