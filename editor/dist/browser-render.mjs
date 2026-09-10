@@ -153,9 +153,9 @@ export async function browserRender({source,options}) {
   output.append(svg);
   let fy=24+chartH*ratio+28;
   if(options.mode==='styled'){
-    const legend=make('text',{x:28,y:fy,'font-family':options.fontFamily,'font-size':Math.max(12,font-3),fill:'#17324D'},'灰色：已完成　　蓝色：计划　　红色：风险 / 延期　　◆ 里程碑　　浅黄色：排除日期');output.append(legend);fy+=28;
+    const legend=make('text',{'data-edit-text':'legend',x:28,y:fy,'font-family':options.fontFamily,'font-size':Math.max(12,font-3),fill:'#17324D'},options.legendText??'灰色：已完成　　蓝色：计划　　红色：风险 / 延期　　◆ 里程碑　　浅黄色：排除日期');output.append(legend);fy+=28;
   }
-  if(options.note){output.append(make('rect',{x:24,y:fy-5,width:options.width-48,height:font+25,rx:6,fill:'#EFF6FF'}));output.append(make('text',{x:40,y:fy+font,'font-size':font,'font-family':options.fontFamily,'font-weight':600,fill:'#17324D'},`${options.noteLabel}　${options.note}`));}
+  if(options.note){output.append(make('rect',{x:24,y:fy-5,width:options.width-48,height:font+25,rx:6,fill:'#EFF6FF'}));output.append(make('text',{'data-edit-text':'note',x:40,y:fy+font,'font-size':font,'font-family':options.fontFamily,'font-weight':600,fill:'#17324D'},`${options.noteLabel}　${options.note}`));}
   const mount=document.querySelector('#mount');mount.replaceChildren(output);await document.fonts.ready;
   const overflow=[...output.querySelectorAll('text')].filter(t=>{const b=t.getBoundingClientRect(),o=output.getBoundingClientRect();return b.left<o.left-1||b.right>o.right+1||b.top<o.top-1||b.bottom>o.bottom+1;}).map(t=>t.textContent);
   if(overflow.length)throw new Error('文字超出最终画布，请加宽、减小字号或缩短备注：'+overflow.slice(0,5).join('；'));

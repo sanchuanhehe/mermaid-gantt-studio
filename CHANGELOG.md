@@ -9,6 +9,12 @@ During initial development (0.x), minor releases may contain explicitly document
 
 ## [Unreleased]
 
+### Added
+
+- Graphical editing of Gantt titles, swimlane names, notes and legend text, with source writeback and undo.
+- Forms for adding swimlanes with an initial task and adding tasks to existing swimlanes.
+- Editor presentation comments that preserve notes and legend text when saving and reopening Mermaid files.
+
 ## [0.1.0] - 2026-09-10
 
 ### Added

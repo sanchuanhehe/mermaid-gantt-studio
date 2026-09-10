@@ -1,3 +1,4 @@
+import {ganttDocument,readPresentation,patchPresentation} from '../dist/diagram-edit.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -17,7 +18,7 @@ function harness(){
  for(const id of ['task-overlay','task-close','task-cancel','task-form','undo-visual','source','engine','notice','lines','line-count','svg','png','preview','empty','size','summary','paper','refresh','save-source','file','sample',...Object.keys(defaults)]){const el=new Element();el.value=defaults[id]??'';nodes.set(id,el);}
  nodes.get('dates').checked=true;nodes.get('engine').contentWindow={postMessage:data=>messages.push(data)};
  const win={addEventListener:(type,fn)=>events.set(type,fn)};
- const context=vm.createContext({installWorkspaceUI:()=>{},installPreviewZoom:()=>{},findTaskLine,patchTask,document:{getElementById:id=>nodes.get(id),fonts:{ready:Promise.resolve()},body:{append(){}},createElement:()=>new Element()},window:win,location:{origin:'http://localhost'},URL,Blob,Intl,Date,Number,String,Array,Object,Promise,Error,console,confirm:()=>true,fetch:async()=>({ok:true,text:async()=> 'gantt\n section A\nTask :a, 2026-09-01, 1d'}),setTimeout:fn=>{const id=++next;timers.set(id,fn);return id;},clearTimeout:id=>timers.delete(id),setInterval,clearInterval});
+ const context=vm.createContext({ganttDocument,readPresentation,patchPresentation,installDiagramUI:()=>({open(){}}),installWorkspaceUI:()=>{},installPreviewZoom:()=>{},findTaskLine,patchTask,document:{getElementById:id=>nodes.get(id),fonts:{ready:Promise.resolve()},body:{append(){}},createElement:()=>new Element()},window:win,location:{origin:'http://localhost'},URL,Blob,Intl,Date,Number,String,Array,Object,Promise,Error,console,confirm:()=>true,fetch:async()=>({ok:true,text:async()=> 'gantt\n section A\nTask :a, 2026-09-01, 1d'}),setTimeout:fn=>{const id=++next;timers.set(id,fn);return id;},clearTimeout:id=>timers.delete(id),setInterval,clearInterval});
  const run=()=>vm.runInContext(`(async()=>{${app}\n})()`,context);
  const emit=data=>events.get('message')({origin:'http://localhost',source:nodes.get('engine').contentWindow,data});
  const flush=()=>{const snapshot=[...timers.entries()];for(const [id,fn]of snapshot){timers.delete(id);fn();}};

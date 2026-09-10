@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs --open",
-    "check": "node --check server.mjs && node --check dist/app.mjs && node --check dist/renderer.mjs && node --check dist/browser-render.mjs && node --check dist/source-edit.mjs && node --check dist/preview-zoom.mjs && node --check dist/workspace-ui.mjs",
+    "check": "node --check server.mjs && node --check dist/app.mjs && node --check dist/renderer.mjs && node --check dist/browser-render.mjs && node --check dist/diagram-edit.mjs && node --check dist/diagram-ui.mjs && node --check dist/source-edit.mjs && node --check dist/preview-zoom.mjs && node --check dist/workspace-ui.mjs",
     "test": "node --test test/*.test.mjs"
   }
 }

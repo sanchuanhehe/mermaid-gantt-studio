@@ -1,9 +1,11 @@
+import {ganttDocument,readPresentation,patchPresentation} from './diagram-edit.mjs';
+import {installDiagramUI} from './diagram-ui.mjs';
 import {installWorkspaceUI} from './workspace-ui.mjs';
 import {installPreviewZoom} from './preview-zoom.mjs';
 import {findTaskLine,patchTask} from './source-edit.mjs';
 const $=id=>document.getElementById(id);
 const editor=$('source'),frame=$('engine'),notice=$('notice');
-let selectedTask=null,visualUndo=null;
+let selectedTask=null,visualUndo=null,diagramUI=null;
 let ready=false,busy=false,revision=0,pending=false,timer,timeout,last=null,lastURL=null,sample='',exporting=false;
 const fields=['mode','width','aspect','font','row','release','dates','today','note-label','note'];
 function message(text,error=false){notice.textContent=text;notice.className=error?'error':'success';}
@@ -11,7 +13,7 @@ function updateLines(){const count=editor.value.split('\n').length;$('lines').te
 function exportState(){for(const id of ['svg','png'])$(id).disabled=exporting||!last||last.revision!==revision;}
 function changed(immediate=false){$('task-overlay').replaceChildren();revision++;pending=true;exportState();updateLines();message('内容已修改，等待预览…');clearTimeout(timer);timer=setTimeout(render,immediate?0:500);}
 function numeric(id,min,max){const value=Number($(id).value);if(!Number.isFinite(value)||value<min||value>max)throw new Error(`${$(id).parentElement.firstChild.textContent.trim()}需在 ${min}–${max} 之间。`);return value;}
-function options(){const fontSize=numeric('font',10,48),rowHeight=numeric('row',14,100);if(rowHeight<fontSize+4)throw new Error(`行高至少为 ${fontSize+4}px，请增加行高或减小字号。`);return {mode:$('mode').value,width:Math.round(numeric('width',720,7680)),aspect:$('aspect').value||undefined,fontSize,rowHeight,dates:$('dates').checked?'on':'off',today:$('today').checked?undefined:'off',release:$('release').value||undefined,note:$('note').value.trim(),noteLabel:$('note-label').value||'备注',timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,fontFamily:'PingFang SC,Microsoft YaHei,Noto Sans CJK SC,Arial,sans-serif'};}
+function options(){const presentation=/^\s*gantt\s*$/m.test(editor.value)?readPresentation(editor.value):{};for(const [key,id]of [['note','note'],['noteLabel','note-label']])if(presentation[key]!==undefined)$(id).value=presentation[key];const fontSize=numeric('font',10,48),rowHeight=numeric('row',14,100);if(rowHeight<fontSize+4)throw new Error(`行高至少为 ${fontSize+4}px，请增加行高或减小字号。`);return {mode:$('mode').value,width:Math.round(numeric('width',720,7680)),aspect:$('aspect').value||undefined,fontSize,rowHeight,dates:$('dates').checked?'on':'off',today:$('today').checked?undefined:'off',release:$('release').value||undefined,note:$('note').value.trim(),noteLabel:$('note-label').value||'备注',timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,fontFamily:'PingFang SC,Microsoft YaHei,Noto Sans CJK SC,Arial,sans-serif',...presentation};}
 function prepareSource(source){let s=source.replace(/^\uFEFF/,'').trim();const match=/^```(?:mermaid)?\s*\n([\s\S]*?)\n```\s*$/.exec(s);return match?match[1]:s;}
 function render(){
  if(!ready||busy||!pending)return;
@@ -34,18 +36,19 @@ window.addEventListener('message',event=>{
  if(previous)URL.revokeObjectURL(previous);
  $('size').textContent=`${last.width} × ${last.height}`;
  $('summary').textContent=last.kind==='gantt'?`${last.taskCount} 个任务 · ${last.laneCount?last.laneCount+' 个泳道':'官方布局'}`:`${last.kind} · 官方渲染`;
- message(['预览已更新'+(last.kind==='gantt'?' · 点击任务条或名称即可修改':''),...last.warnings].join('\n'));fit();exportState();drawTaskHits();
+ message(['预览已更新'+(last.kind==='gantt'?' · 点击标题、泳道、任务或备注即可修改':''),...last.warnings].join('\n'));fit();exportState();drawTaskHits();
 });
 frame.addEventListener('load',()=>frame.contentWindow.postMessage({type:'ping'},location.origin));
 frame.contentWindow.postMessage({type:'ping'},location.origin);
 function fit(){if(!last)return;const zoom=$('zoom').value;$('paper').style.width=zoom==='fit'?'100%':Math.round(last.width*Number(zoom))+'px';}
 function download(blob,name){const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}
+function savedSource(){return /^\s*gantt\s*$/m.test(editor.value)?patchPresentation(editor.value,{note:options().note,noteLabel:options().noteLabel}):editor.value;}
 function fileName(){const match=/^\s*title\s+(.+)$/m.exec(editor.value);return (match?.[1]||'mermaid-chart').replace(/[<>:"/\\|?*\x00-\x1f]/g,'_').slice(0,100);}
 editor.addEventListener('input',()=>changed());editor.addEventListener('scroll',()=>{$('lines').scrollTop=editor.scrollTop;});
 editor.addEventListener('keydown',event=>{if(event.key==='Tab'){event.preventDefault();editor.setRangeText('    ',editor.selectionStart,editor.selectionEnd,'end');changed();}if((event.metaKey||event.ctrlKey)&&event.key==='Enter'){event.preventDefault();changed(true);}});
-for(const id of fields)$(id).addEventListener('input',()=>{if(id==='font'&&Number($('row').value)<Number($('font').value)+4)$('row').value=Number($('font').value)+4;changed();});
+for(const id of fields)$(id).addEventListener('input',()=>{if(['note','note-label'].includes(id)&&/^\s*gantt\s*$/m.test(editor.value)){try{editor.value=patchPresentation(editor.value,{note:$('note').value,noteLabel:$('note-label').value});}catch(error){message(error.message,true);return;}}if(id==='font'&&Number($('row').value)<Number($('font').value)+4)$('row').value=Number($('font').value)+4;changed();});
 $('zoom').addEventListener('change',fit);$('refresh').addEventListener('click',()=>changed(true));
-$('save-source').addEventListener('click',()=>download(new Blob([editor.value],{type:'text/plain;charset=utf-8'}),fileName()+'.mmd'));
+$('save-source').addEventListener('click',()=>download(new Blob([savedSource()],{type:'text/plain;charset=utf-8'}),fileName()+'.mmd'));
 $('svg').addEventListener('click',()=>{if(last?.revision===revision)download(new Blob([last.svg],{type:'image/svg+xml;charset=utf-8'}),fileName()+'.svg');});
 $('png').addEventListener('click',async()=>{
  if(!last||last.revision!==revision||exporting)return;
@@ -80,6 +83,17 @@ function drawTaskHits(){
   Object.assign(button.style,{left:task.x+'%',top:task.y+'%',width:task.w+'%',height:task.h+'%'});
   button.addEventListener('click',()=>openTask(task));overlay.append(button);
  }
+ const used=new Set();
+ for(const hit of last.textHits??[]){
+  if(hit.type==='section'){const lane=ganttDocument(editor.value).sections.find(l=>l.name===hit.text&&!used.has(l.index));if(!lane)continue;hit.index=lane.index;used.add(lane.index);}
+  const button=document.createElement('button');button.type='button';button.className='task-hit text-hit';
+  const label=({title:'标题',section:'泳道',note:'备注',legend:'图例'})[hit.type];button.title='编辑'+label;button.setAttribute('aria-label','编辑'+label+'：'+hit.text);
+  Object.assign(button.style,{left:hit.x+'%',top:hit.y+'%',width:hit.w+'%',height:hit.h+'%'});
+  button.addEventListener('click',()=>diagramUI.open(hit));overlay.append(button);
+ }
+}
+function commitVisual(next){
+ visualUndo={before:editor.value,after:next,note:$('note').value,noteLabel:$('note-label').value};editor.value=next;$('undo-visual').disabled=false;changed(true);
 }
 function openTask(task){
  if(last?.revision!==revision)return;
@@ -97,15 +111,17 @@ $('task-form').addEventListener('submit',event=>{
   const previous=editor.value,edit={label:$('task-name').value,schedule:[$('task-start').value.trim(),$('task-end').value.trim()].filter(Boolean).join(', ')};
   for(const flag of ['done','active','crit','milestone'])edit[flag]=$('task-'+flag).checked;
   const next=patchTask(previous,selectedTask.task,selectedTask.line.original,edit);
-  visualUndo={before:previous,after:next};editor.value=next;$('undo-visual').disabled=false;$('task-dialog').close();changed(true);
+  commitVisual(next);$('task-dialog').close();
  }catch(error){$('task-error').textContent=error.message;}
 });
 $('undo-visual').addEventListener('click',()=>{
  if(!visualUndo)return;
  if(editor.value!==visualUndo.after){message('图上修改后源码又发生了变化，无法直接撤销；请在源码中调整。',true);return;}
- editor.value=visualUndo.before;visualUndo=null;$('undo-visual').disabled=true;changed(true);
+ editor.value=visualUndo.before;$('note').value=visualUndo.note;$('note-label').value=visualUndo.noteLabel;visualUndo=null;$('undo-visual').disabled=true;changed(true);
 });
 
 installPreviewZoom({viewport:$('viewport'),paper:$('paper'),select:$('zoom'),wheelToggle:$('wheel-zoom'),getWidth:()=>last?.width});
 
 installWorkspaceUI();
+
+diagramUI=installDiagramUI({getContext:()=>({source:editor.value,last,revision,options:options()}),commit:commitVisual,onError:text=>message(text,true)});

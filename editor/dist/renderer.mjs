@@ -29,7 +29,11 @@ window.addEventListener('message',async event=>{
    const right=Math.max(...boxes.map(b=>b.right))-outer.left,bottom=Math.max(...boxes.map(b=>b.bottom))-outer.top;
    return [{...task,x:100*left/outer.width,y:100*top/outer.height,w:100*(right-left)/outer.width,h:100*(bottom-top)/outer.height}];
   }):[];
-  parent.postMessage({type:'rendered',id,result:{svg,width,height,warnings,taskCount:tasks.length,laneCount,kind,taskHits}},location.origin);
+  const textHits=kind==='gantt'?[...canvas.querySelectorAll('text.titleText,text.sectionTitle,[data-edit-text]')].map(el=>{
+   const box=el.getBoundingClientRect();
+   return {type:el.matches('.titleText')?'title':el.matches('.sectionTitle')?'section':el.getAttribute('data-edit-text'),text:el.textContent.trim(),x:100*(box.left-outer.left)/outer.width,y:100*(box.top-outer.top)/outer.height,w:100*box.width/outer.width,h:100*box.height/outer.height};
+  }):[];
+  parent.postMessage({type:'rendered',id,result:{svg,width,height,warnings,taskCount:tasks.length,laneCount,kind,taskHits,textHits}},location.origin);
  }catch(error){document.getElementById('mount').replaceChildren();parent.postMessage({type:'rendered',id,error:String(error.message||error)},location.origin);}
  finally{busy=false;}
 });

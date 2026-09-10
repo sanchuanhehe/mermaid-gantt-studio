@@ -10,3 +10,13 @@
 .brand{gap:11px;flex-shrink:0}.brand-symbol{display:flex;flex-direction:column;justify-content:center;gap:5px;width:28px;height:30px;padding:2px 0;flex-shrink:0}.brand-symbol i{display:block;height:4px;border-radius:2px;background:#326bdd}.brand-symbol i:nth-child(1){width:17px;background:#a4bce7}.brand-symbol i:nth-child(2){width:19px;margin-left:8px}.brand-symbol i:nth-child(3){width:14px;margin-left:4px;background:#6b95df}.brand h1{font-size:18px;font-weight:650;letter-spacing:-.4px;line-height:1.5;white-space:nowrap;color:#203854}.brand h1 span{font-size:16px;font-weight:450;margin-left:5px;color:#60738b;letter-spacing:0}.brand-local{font-size:11px;line-height:1;letter-spacing:0;color:#8997a8;border-left:1px solid #e1e7ef;padding-left:11px;margin-left:2px}@media(max-width:1100px){.brand{gap:9px}.brand h1{font-size:17px}.brand h1 span{font-size:15px;margin-left:3px}.brand-local{display:none}}@media(max-width:500px){.brand h1{font-size:17px}.brand h1 span{font-size:15px}}
 
 .brand-version{font-size:11px;color:#8798ac;padding:3px 6px;background:#f0f4f9;border-radius:4px;white-space:nowrap}@media(max-width:1100px){.brand-version{font-size:10px;padding:2px 4px}}
+
+/* Graphical editing controls remain usable on narrower workspaces. */
+[hidden]{display:none!important}
+.preview-pane>.pane-head{flex-wrap:wrap;gap:10px}
+.preview-actions{flex-wrap:wrap}
+#diagram-dialog{width:min(480px,calc(100vw - 32px));max-height:90vh;overflow:auto}
+#diagram-dialog textarea,#diagram-dialog select{box-sizing:border-box;width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;background:white;color:#17324d;font:inherit}
+#diagram-dialog textarea{resize:vertical}
+#diagram-error{color:#b42318;font-size:13px}
+.text-hit:hover,.text-hit:focus-visible{background:#2563eb18;outline:2px solid #2563eb;border-radius:3px}
