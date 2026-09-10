@@ -8,7 +8,7 @@ target = root / "_site"
 if target.exists():
     shutil.rmtree(target)
 target.mkdir()
-files = ["index.html", "style.css", "app.mjs", "browser-render.mjs", "renderer.html", "renderer.mjs", "source-edit.mjs", "diagram-edit.mjs", "diagram-ui.mjs", "preview-zoom.mjs", "workspace-ui.mjs", "vendor/mermaid.js", "vendor/MERMAID-LICENSE"]
+files = ["changelog.html", "index.html", "style.css", "app.mjs", "browser-render.mjs", "renderer.html", "renderer.mjs", "source-edit.mjs", "diagram-edit.mjs", "diagram-ui.mjs", "preview-zoom.mjs", "workspace-ui.mjs", "vendor/mermaid.js", "vendor/MERMAID-LICENSE"]
 for name in files:
     dest = target / name
     dest.parent.mkdir(parents=True, exist_ok=True)

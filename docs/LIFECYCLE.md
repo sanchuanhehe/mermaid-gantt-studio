@@ -38,7 +38,7 @@
 1. 将变更记录写入 CHANGELOG.md 的 Unreleased 段。
 2. 执行 `npm run version:set -- 0.1.1`，同步三个 package.json、锁文件和界面版本。
 3. 把 Unreleased 内容整理为带日期的 `[0.1.1]` 段并更新比较链接。
-4. 执行 `npm run check`、`npm test`。渲染器需 `npm run setup:renderer` 与 Chromium，再运行 `npm run test:renderer`。
+4. 修改 CHANGELOG 后运行 `npm run changelog:build`，同步网站更新日志页面并提交。执行 `npm run check`、`npm test`。渲染器需 `npm run setup:renderer` 与 Chromium，再运行 `npm run test:renderer`。
 5. 合并 / 提交到 main 并等待 CI 通过；在该提交创建标签：
 
    ```sh

@@ -20,3 +20,5 @@
 #diagram-dialog textarea{resize:vertical}
 #diagram-error{color:#b42318;font-size:13px}
 .text-hit:hover,.text-hit:focus-visible{background:#2563eb18;outline:2px solid #2563eb;border-radius:3px}
+
+.changelog-link{font-size:12px;color:#60748e;white-space:nowrap;text-decoration:none;padding:5px 7px;border-radius:6px}.changelog-link:hover,.changelog-link:focus-visible{color:#245bdb;background:#eaf2ff;text-decoration:underline}
